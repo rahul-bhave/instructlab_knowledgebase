@@ -1,2 +1,2 @@
-# instructlab_knowledge
+# instructlab_knowledgebase
 instructlab_knowledgebase
