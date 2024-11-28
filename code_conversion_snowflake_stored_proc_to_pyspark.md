@@ -126,7 +126,7 @@ Recursive CTEs are most commonly used to model hierarchical data. In the case ab
 i = 1
 check_date = '2010-12-23'
 start_product_id = 972 # provide a specific id 
-# bill_df corresponds to the "BOM_CTE" clause in the above query
+
 df = spark.sql(f"""
 SELECT b.ProductAssemblyID
   , b.ComponentID
@@ -141,11 +141,11 @@ FROM BillOfMaterials b
 WHERE b.ProductAssemblyID = {start_product_id} AND '{check_date}' >= b.StartDate AND '{check_date}' <= IFNULL(b.EndDate, '{check_date}')
 """)
 
-# this view is our 'CTE' that we reference with each pass
+
 df.createOrReplaceTempView('recursion_df')
 
 while True:
-  # select data for this recursion level
+  
   bill_df = spark.sql(f"""
   SELECT b.ProductAssemblyID
     , b.ComponentID
@@ -161,11 +161,11 @@ while True:
   WHERE '{check_date}' >= b.StartDate AND '{check_date}' <= IFNULL(b.EndDate, '{check_date}')
   """)
   
-  # this view is our 'CTE' that we reference with each pass
+  
   bill_df.createOrReplaceTempView('recursion_df')
-  # add the results to the main output dataframe
+ 
   df = df.union(bill_df)
-  # if there are no results at this recursion level then break
+  
   if bill_df.count() == 0:
       df.createOrReplaceTempView("final_df")
       break
@@ -330,7 +330,8 @@ WHILE @counter <= @rowcount
 
 #### Pyspark example
 
-# this is the same as spark.sql("SELECT * FROM my_source_table")
+this is the same as spark.sql("SELECT * FROM my_source_table")
+
 df = spark.read.table('my_source_table') 
 
 df.write.mode("append").saveAsTable("my_target_table")
