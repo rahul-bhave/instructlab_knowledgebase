@@ -9,8 +9,6 @@ One of the major advantages of using a temporary view is the ability to referenc
 Assume we have a process that selects data from a source table and writes to multiple output tables. 
 To do so, we read our source table into a temporary table, execute different transformations, and write to multiple target tables.
 
-### Example:
-
 #### Stored prodeure
 CREATE PROCEDURE WriteMultipleTables
 AS
